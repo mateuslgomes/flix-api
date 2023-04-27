@@ -35,4 +35,13 @@ public class VideoService {
         return videoRepository.getReferenceById(id);
     }
 
+    public Object findById(UUID id) {
+        var resultado = videoRepository.findById(id);
+        if (resultado.isPresent()) {
+            return resultado.get();
+        } else {
+            return "Não foi possível encontrar o modelo com o id " + id;
+        }
+    }
+
 }

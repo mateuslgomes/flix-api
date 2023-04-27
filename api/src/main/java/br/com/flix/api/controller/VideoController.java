@@ -31,6 +31,11 @@ public class VideoController {
         return ResponseEntity.ok(VideoDto.of(videoService.getReferenceById(id)));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(videoService.findById(id));
+    }
+
     @PostMapping
     public ResponseEntity<Video> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
         var video = Video.of(dto) ;
