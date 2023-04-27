@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("videos")
@@ -20,12 +21,18 @@ public class VideoController {
 
 
     @GetMapping
-    public ResponseEntity<List<Video>> video() {
+    public ResponseEntity<List<Video>> buscar() {
         return ResponseEntity.ok(videoService.findAll());
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<VideoDto> atualizar(@PathVariable UUID id, @RequestBody @Valid VideoDto dto) {
+        videoService.atualizar(dto, id);
+        return ResponseEntity.ok(VideoDto.of(videoService.getReferenceById(id)));
+    }
+
     @PostMapping
-    public ResponseEntity<Video> video(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Video> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
         var video = Video.of(dto) ;
         videoService.save(video);
         var uri = uriBuilder.path("video/{id}").buildAndExpand(video.getId()).toUri();

@@ -9,10 +9,11 @@ import java.util.UUID;
 @Table(name = "videos")
 @Entity(name = "video")
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Video {
 
     @Id
@@ -28,6 +29,12 @@ public class Video {
                 .descricao(dto.descricao())
                 .url(dto.url())
                 .build();
+    }
+
+    public void atualizar(VideoDto dto) {
+        this.titulo = dto.titulo();
+        this.descricao = dto.descricao();
+        this.url = dto.url();
     }
 
 }
