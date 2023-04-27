@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,6 +43,11 @@ public class VideoService {
         } else {
             return "Não foi possível encontrar o modelo com o id " + id;
         }
+    }
+
+    @Transactional
+    public void deleteById(UUID id) {
+        videoRepository.deleteById(id);
     }
 
 }

@@ -36,6 +36,12 @@ public class VideoController {
         return ResponseEntity.ok(videoService.findById(id));
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable UUID id) {
+        videoService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     public ResponseEntity<Video> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
         var video = Video.of(dto) ;
@@ -45,4 +51,3 @@ public class VideoController {
     }
 
 }
-
