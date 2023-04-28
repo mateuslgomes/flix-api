@@ -26,9 +26,9 @@ public class VideoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<VideoDto> atualizar(@PathVariable UUID id, @RequestBody @Valid VideoDto dto) {
-        videoService.atualizar(dto, id);
-        return ResponseEntity.ok(VideoDto.of(videoService.getReferenceById(id)));
+    public ResponseEntity<Video> atualizar(@PathVariable UUID id, @RequestBody @Valid VideoDto dto) {
+        var video = videoService.atualizar(id, dto);
+        return ResponseEntity.ok(video);
     }
 
     @GetMapping("{id}")

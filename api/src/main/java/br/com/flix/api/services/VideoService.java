@@ -1,11 +1,12 @@
 package br.com.flix.api.services;
 
 import br.com.flix.api.dtos.VideoDto;
+import br.com.flix.api.infra.exceptions.VideoNaoEncontradoException;
 import br.com.flix.api.model.Video;
 import br.com.flix.api.repositories.VideoRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,28 +27,20 @@ public class VideoService {
         return videoRepository.findAll();
     }
 
-    @Transactional
-    public void atualizar(VideoDto dto, UUID id) {
-        var video = videoRepository.getReferenceById(id);
-        video.atualizar(dto);
-    }
-
-    public Video getReferenceById(UUID id) {
-        return videoRepository.getReferenceById(id);
-    }
-
-    public Object findById(UUID id) {
-        var resultado = videoRepository.findById(id);
-        if (resultado.isPresent()) {
-            return resultado.get();
-        } else {
-            return "Não foi possível encontrar o modelo com o id " + id;
-        }
+    public Optional<Video> findById(UUID id) {
+        return videoRepository.findById(id);
     }
 
     @Transactional
     public void deleteById(UUID id) {
         videoRepository.deleteById(id);
+    }
+
+    public Video atualizar(UUID id, VideoDto dto) {
+        var video = videoRepository.findById(id)
+                .orElseThrow(() -> new VideoNaoEncontradoException(id));
+        video.atualizar(dto);
+        return video;
     }
 
 }
