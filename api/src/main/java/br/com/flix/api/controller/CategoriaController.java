@@ -6,10 +6,9 @@ import br.com.flix.api.services.CategoriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("categoria")
@@ -23,5 +22,11 @@ public class CategoriaController {
         var categoria = Categoria.of(dto);
         return ResponseEntity.ok(categoriaService.save(categoria));
     }
+
+    @GetMapping
+    public ResponseEntity<List<Categoria>> buscar() {
+        return ResponseEntity.ok(categoriaService.findAll());
+    }
+
 
 }

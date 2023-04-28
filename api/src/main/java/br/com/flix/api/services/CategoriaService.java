@@ -5,6 +5,8 @@ import br.com.flix.api.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoriaService {
 
@@ -13,6 +15,10 @@ public class CategoriaService {
 
     public Categoria save(Categoria categoria) {
         return categoriaRepository.save(categoria);
+    }
+
+    public List<Categoria> findAll() {
+        return categoriaRepository.findAll();
     }
 
 }
