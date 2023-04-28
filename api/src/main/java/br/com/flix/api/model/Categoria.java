@@ -1,5 +1,6 @@
 package br.com.flix.api.model;
 
+import br.com.flix.api.dtos.CategoriaDto;
 import br.com.flix.api.model.enums.Cor;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Builder
 public class Categoria {
 
     @Id
@@ -22,5 +24,12 @@ public class Categoria {
 
     @Enumerated(EnumType.STRING)
     private Cor cor;
+
+    public static Categoria of(CategoriaDto dto) {
+        return Categoria.builder()
+                .titulo(dto.titulo())
+                .cor(dto.cor())
+                .build();
+    }
 
 }
