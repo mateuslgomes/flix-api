@@ -15,7 +15,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     ProblemDetail handleVideoNaoEncontradoException(VideoNaoEncontradoException ex) {
         var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         problemDetail.setTitle("Vídeo Não encontrado");
-        problemDetail.setDetail("É preciso informar um ID de vídeo existente");
+        problemDetail.setDetail("É preciso informar um ID de algum vídeo existente");
+        problemDetail.setProperty("Categoria", "Not Found");
+        problemDetail.setProperty("TimeStamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(CategoriaNaoEncontradaException.class)
+    ProblemDetail CategoriaNaoEncontradaException(CategoriaNaoEncontradaException ex) {
+        var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        problemDetail.setTitle("Categoria Não encontrado");
+        problemDetail.setDetail("É preciso informar um ID de alguma categoria existente");
         problemDetail.setProperty("Categoria", "Not Found");
         problemDetail.setProperty("TimeStamp", Instant.now());
         return problemDetail;

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("categoria")
@@ -28,5 +29,9 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.findAll());
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Categoria> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(categoriaService.findById(id));
+    }
 
 }
