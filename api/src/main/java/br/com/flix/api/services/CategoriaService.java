@@ -38,4 +38,11 @@ public class CategoriaService {
         return categoria;
     }
 
+    @Transactional
+    public void deleteById(UUID id) {
+        categoriaRepository.findById(id)
+                .orElseThrow(() -> new CategoriaNaoEncontradaException(id));
+        categoriaRepository.deleteById(id);
+    }
+
 }

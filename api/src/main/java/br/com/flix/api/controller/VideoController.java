@@ -31,7 +31,7 @@ public class VideoController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable UUID id) {
+    public ResponseEntity<Video> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(videoService.findById(id));
     }
 

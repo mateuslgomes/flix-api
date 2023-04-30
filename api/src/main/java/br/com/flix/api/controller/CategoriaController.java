@@ -39,4 +39,10 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.atualizar(id, dto));
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable UUID id) {
+        categoriaService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
