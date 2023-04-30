@@ -32,4 +32,9 @@ public class Categoria {
                 .build();
     }
 
+    public void atualizar(CategoriaDto dto) {
+        this.titulo = dto.titulo();
+        this.cor = dto.cor();
+    }
+
 }
