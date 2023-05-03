@@ -1,6 +1,7 @@
 package br.com.flix.api.controller;
 
-import br.com.flix.api.dtos.VideoDto;
+import br.com.flix.api.dtos.requests.VideoDto;
+import br.com.flix.api.dtos.response.VideoResponse;
 import br.com.flix.api.model.Video;
 import br.com.flix.api.services.CategoriaService;
 import br.com.flix.api.services.VideoService;
@@ -23,20 +24,20 @@ public class VideoController {
     @Autowired
     CategoriaService categoriaService;
 
-    @GetMapping
-    public ResponseEntity<List<Video>> buscar() {
-        return ResponseEntity.ok(videoService.findAll());
-    }
+        @GetMapping
+        public ResponseEntity<List<VideoResponse>> buscar() {
+            return ResponseEntity.ok(videoService.findAll());
+        }
 
     @PutMapping("{id}")
-    public ResponseEntity<Video> atualizar(@PathVariable UUID id, @RequestBody @Valid VideoDto dto) {
+    public ResponseEntity<VideoResponse> atualizar(@PathVariable UUID id, @RequestBody @Valid VideoDto dto) {
         var video = videoService.atualizar(id, dto);
-        return ResponseEntity.ok(video);
+        return ResponseEntity.ok(VideoResponse.of(video));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Video> buscarPorId(@PathVariable UUID id) {
-        return ResponseEntity.ok(videoService.findById(id));
+    public ResponseEntity<VideoResponse> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(VideoResponse.of(videoService.findById(id)));
     }
 
     @DeleteMapping("{id}")
@@ -46,11 +47,11 @@ public class VideoController {
     }
 
     @PostMapping
-    public ResponseEntity<Video> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<VideoResponse> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
         var video = Video.of(dto, categoriaService.findByCor(dto.cor())) ;
         videoService.save(video);
         var uri = uriBuilder.path("video/{id}").buildAndExpand(video.getId()).toUri();
-        return ResponseEntity.created(uri).body(video);
+        return ResponseEntity.created(uri).body(VideoResponse.of(video));
     }
 
 }

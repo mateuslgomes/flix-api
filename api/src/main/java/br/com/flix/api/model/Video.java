@@ -1,6 +1,6 @@
 package br.com.flix.api.model;
 
-import br.com.flix.api.dtos.VideoDto;
+import br.com.flix.api.dtos.requests.VideoDto;
 import jakarta.persistence.*;
 import lombok.*;
 

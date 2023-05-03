@@ -1,6 +1,6 @@
 package br.com.flix.api.services;
 
-import br.com.flix.api.dtos.CategoriaDto;
+import br.com.flix.api.dtos.requests.CategoriaDto;
 import br.com.flix.api.infra.exceptions.CategoriaNaoEncontradaException;
 import br.com.flix.api.model.Categoria;
 import br.com.flix.api.model.enums.Cor;

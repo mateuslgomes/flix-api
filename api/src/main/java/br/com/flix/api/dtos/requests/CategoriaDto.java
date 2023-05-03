@@ -1,4 +1,4 @@
-package br.com.flix.api.dtos;
+package br.com.flix.api.dtos.requests;
 
 import br.com.flix.api.model.enums.Cor;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,6 @@
 package br.com.flix.api;
 
-import br.com.flix.api.dtos.CategoriaDto;
+import br.com.flix.api.dtos.requests.CategoriaDto;
 import br.com.flix.api.model.Categoria;
 import br.com.flix.api.model.enums.Cor;
 import br.com.flix.api.repositories.CategoriaRepository;
