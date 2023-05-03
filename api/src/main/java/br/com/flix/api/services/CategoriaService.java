@@ -3,6 +3,7 @@ package br.com.flix.api.services;
 import br.com.flix.api.dtos.CategoriaDto;
 import br.com.flix.api.infra.exceptions.CategoriaNaoEncontradaException;
 import br.com.flix.api.model.Categoria;
+import br.com.flix.api.model.enums.Cor;
 import br.com.flix.api.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class CategoriaService {
     public Categoria findById(UUID id) {
         return categoriaRepository.findById(id)
                 .orElseThrow(() -> new CategoriaNaoEncontradaException(id));
+    }
+
+    public Categoria findByCor(Cor cor) {
+        return categoriaRepository.findByCor(cor)
+                .orElseThrow(() -> new CategoriaNaoEncontradaException(cor));
     }
 
     @Transactional

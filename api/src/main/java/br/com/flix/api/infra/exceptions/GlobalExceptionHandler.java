@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     ProblemDetail CategoriaNaoEncontradaException(CategoriaNaoEncontradaException ex) {
         var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         problemDetail.setTitle("Categoria Não encontrado");
-        problemDetail.setDetail("É preciso informar um ID de alguma categoria existente");
+        problemDetail.setDetail(ex.getMessage());
         problemDetail.setProperty("Categoria", "Not Found");
         problemDetail.setProperty("TimeStamp", Instant.now());
         return problemDetail;

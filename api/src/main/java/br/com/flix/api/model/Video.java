@@ -23,11 +23,16 @@ public class Video {
     private String descricao;
     private String url;
 
-    public static Video of(VideoDto dto) {
+    @OneToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    public static Video of(VideoDto dto, Categoria categoria) {
         return Video.builder()
                 .titulo(dto.titulo())
                 .descricao(dto.descricao())
                 .url(dto.url())
+                .categoria(categoria)
                 .build();
     }
 

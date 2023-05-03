@@ -2,6 +2,7 @@ package br.com.flix.api.controller;
 
 import br.com.flix.api.dtos.VideoDto;
 import br.com.flix.api.model.Video;
+import br.com.flix.api.services.CategoriaService;
 import br.com.flix.api.services.VideoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class VideoController {
 
     @Autowired
     VideoService videoService;
+
+    @Autowired
+    CategoriaService categoriaService;
 
     @GetMapping
     public ResponseEntity<List<Video>> buscar() {
@@ -43,7 +47,7 @@ public class VideoController {
 
     @PostMapping
     public ResponseEntity<Video> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
-        var video = Video.of(dto) ;
+        var video = Video.of(dto, categoriaService.findByCor(dto.cor())) ;
         videoService.save(video);
         var uri = uriBuilder.path("video/{id}").buildAndExpand(video.getId()).toUri();
         return ResponseEntity.created(uri).body(video);
