@@ -24,7 +24,7 @@ public record VideoDto(
     public static VideoDto of(Video video) {
         return VideoDto.builder()
                 .titulo(video.getTitulo())
-                .cor(video.getCategoria().getCor())
+                .cor(video.getCategorias().getCor())
                 .descricao(video.getDescricao())
                 .url(video.getUrl())
                 .build();

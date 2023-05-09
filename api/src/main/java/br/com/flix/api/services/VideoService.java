@@ -25,7 +25,7 @@ public class VideoService {
     }
 
     public List<VideoResponse> findAll() {
-        List<Video> videos = videoRepository.findAll();
+        var videos = videoRepository.findAll();
         return videos.stream()
                 .map(VideoResponse::of)
                 .collect(Collectors.toList());
@@ -49,6 +49,13 @@ public class VideoService {
                 .orElseThrow(() -> new VideoNaoEncontradoException(id));
         video.atualizar(dto);
         return video;
+    }
+
+    public List<VideoResponse> findVideoByCategoria(UUID id) {
+        var videos = videoRepository.findByCategoriasId(id);
+        return videos.stream()
+                .map(VideoResponse::of)
+                .collect(Collectors.toList());
     }
 
 }

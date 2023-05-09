@@ -1,8 +1,11 @@
 package br.com.flix.api.services;
 
 import br.com.flix.api.dtos.requests.CategoriaDto;
+import br.com.flix.api.dtos.response.CategoriaResponse;
+import br.com.flix.api.dtos.response.VideoResponse;
 import br.com.flix.api.infra.exceptions.CategoriaNaoEncontradaException;
 import br.com.flix.api.model.Categoria;
+import br.com.flix.api.model.Video;
 import br.com.flix.api.model.enums.Cor;
 import br.com.flix.api.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoriaService {
@@ -22,8 +26,12 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public List<Categoria> findAll() {
-        return categoriaRepository.findAll();
+    public List<CategoriaResponse> findAll() {
+        var categorias = categoriaRepository.findAll();
+
+        return categorias.stream()
+                .map(CategoriaResponse::of)
+                .collect(Collectors.toList());
     }
 
     public Categoria findById(UUID id) {

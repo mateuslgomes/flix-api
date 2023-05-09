@@ -5,6 +5,7 @@ import br.com.flix.api.model.enums.Cor;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "categorias")
@@ -31,6 +32,9 @@ public class Categoria {
                 .cor(dto.cor())
                 .build();
     }
+
+    @OneToMany(mappedBy = "categorias")
+    private List<Video> videos;
 
     public void atualizar(CategoriaDto dto) {
         this.titulo = dto.titulo();

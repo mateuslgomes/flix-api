@@ -14,7 +14,7 @@ public record VideoResponse(UUID id, String titulo, String descricao, UUID Categ
                 .id(video.getId())
                 .titulo(video.getTitulo())
                 .descricao(video.getDescricao())
-                .CategoriaId(video.getCategoria().getId())
+                .CategoriaId(video.getCategorias().getId())
                 .url(video.getUrl())
                 .build();
     }
