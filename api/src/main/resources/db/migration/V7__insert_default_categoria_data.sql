@@ -1,0 +1,1 @@
+INSERT INTO categorias (id, titulo, cor) VALUES (UUID_TO_BIN('2a15f648-f4a4-4e9c-aaf5-65e5f2b1345a'), 'LIVRE', 'VERDE');

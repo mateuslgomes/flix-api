@@ -1,0 +1,1 @@
+ALTER TABLE videos MODIFY categorias_id BINARY(16) NOT NULL DEFAULT x'2a15f648f4a44e9caaf565e5f2b1345a';
