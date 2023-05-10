@@ -33,7 +33,9 @@ public class Categoria {
                 .build();
     }
 
-    @OneToMany(mappedBy = "categorias")
+
+    @OneToMany
+    @JoinColumn(name = "categorias_id")
     private List<Video> videos;
 
     public void atualizar(CategoriaDto dto) {

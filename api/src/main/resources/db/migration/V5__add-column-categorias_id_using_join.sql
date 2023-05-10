@@ -1,0 +1,1 @@
+ALTER TABLE videos ADD categorias_id binary(16)

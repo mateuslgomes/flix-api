@@ -1,9 +1,16 @@
-# Configurações do banco de dados MySQL
+# ConfiguraÃ§Ãµes do banco de dados MySQL
 spring.datasource.url=jdbc:mysql://localhost:3306/flixapi?createDatabaseIfNotExist=true
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-
-spring.jpa.show-sql=true
+spring.datasource.username=usuario
+spring.datasource.password=senha
 spring.jpa.properties.hibernate.format_sql=true
 
-server.error.include-stacktrac
+
+## Configurações do banco de dados
+#spring.datasource.driverClassName=org.h2.Driver
+#spring.datasource.url=jdbc:h2:mem:testdb
+#spring.datasource.username=sa
+#spring.datasource.password=
+#
+## Configurações do H2 Console (opcional)
+#spring.h2.console.enabled=true
+#spring.h2.console.path=/h2-console
