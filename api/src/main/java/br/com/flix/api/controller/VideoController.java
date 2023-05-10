@@ -23,11 +23,15 @@ public class VideoController {
 
     @Autowired
     CategoriaService categoriaService;
+    
 
-        @GetMapping
-        public ResponseEntity<List<VideoResponse>> buscar() {
+    @GetMapping
+    public ResponseEntity<List<VideoResponse>> buscadorVideos(@RequestParam(value = "search", required = false) String pesquisa) {
+        if (pesquisa == null) {
             return ResponseEntity.ok(videoService.findAll());
         }
+        return ResponseEntity.ok(videoService.pesquisarVideos(pesquisa));
+    }
 
     @PutMapping("{id}")
     public ResponseEntity<VideoResponse> atualizar(@PathVariable UUID id, @RequestBody @Valid VideoDto dto) {

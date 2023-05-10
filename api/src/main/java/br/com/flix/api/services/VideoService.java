@@ -58,4 +58,11 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
+    public List<VideoResponse> pesquisarVideos(String pesquisa) {
+         var videos = videoRepository.findByTituloContains(pesquisa);
+        return videos.stream()
+                .map(VideoResponse::of)
+                .collect(Collectors.toList());
+    }
+
 }

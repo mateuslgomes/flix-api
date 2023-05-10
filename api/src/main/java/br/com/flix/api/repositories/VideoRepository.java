@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface VideoRepository extends JpaRepository<Video, UUID> {
     List<Video> findByCategoriasId(UUID id);
 
+    List<Video> findByTituloContains(String pesquisa);
+
 }
