@@ -15,7 +15,6 @@ public record VideoDto(
         @NotBlank
         String descricao,
 
-        @NotNull
         Cor cor,
 
         @NotBlank

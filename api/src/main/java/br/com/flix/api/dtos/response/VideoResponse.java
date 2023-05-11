@@ -10,13 +10,15 @@ import java.util.UUID;
 public record VideoResponse(UUID id, String titulo, String descricao, UUID CategoriaId, String url) {
 
     public static VideoResponse of(Video video) {
-        return VideoResponse.builder()
+        VideoResponse.VideoResponseBuilder builder = VideoResponse.builder()
                 .id(video.getId())
                 .titulo(video.getTitulo())
                 .descricao(video.getDescricao())
-                .CategoriaId(video.getCategorias().getId())
-                .url(video.getUrl())
-                .build();
+                .url(video.getUrl());
+        if (video.getCategorias() != null) {
+            builder.CategoriaId(video.getCategorias().getId());
+        }
+        return builder.build();
     }
 
 }

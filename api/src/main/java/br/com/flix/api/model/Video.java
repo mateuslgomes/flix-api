@@ -26,6 +26,14 @@ public class Video {
     @ManyToOne
     private Categoria categorias;
 
+    public static Video of(VideoDto dto) {
+        return Video.builder()
+                .titulo(dto.titulo())
+                .descricao(dto.descricao())
+                .url(dto.url())
+                .build();
+    }
+
     public static Video of(VideoDto dto, Categoria categoria) {
         return Video.builder()
                 .titulo(dto.titulo())
@@ -38,6 +46,13 @@ public class Video {
     public void atualizar(VideoDto dto) {
         this.titulo = dto.titulo();
         this.descricao = dto.descricao();
+        this.url = dto.url();
+    }
+
+    public void atualizar(VideoDto dto, Categoria categoria) {
+        this.titulo = dto.titulo();
+        this.descricao = dto.descricao();
+        this.categorias = categoria;
         this.url = dto.url();
     }
 

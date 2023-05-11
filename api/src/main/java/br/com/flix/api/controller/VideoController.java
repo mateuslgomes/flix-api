@@ -51,11 +51,8 @@ public class VideoController {
     }
 
     @PostMapping
-    public ResponseEntity<VideoResponse> cadastrar(@RequestBody @Valid VideoDto dto, UriComponentsBuilder uriBuilder) {
-        var video = Video.of(dto, categoriaService.findByCor(dto.cor())) ;
-        videoService.save(video);
-        var uri = uriBuilder.path("video/{id}").buildAndExpand(video.getId()).toUri();
-        return ResponseEntity.created(uri).body(VideoResponse.of(video));
+    public ResponseEntity<VideoResponse> cadastrar(@RequestBody @Valid VideoDto dto) {
+        return ResponseEntity.ok(videoService.save(dto));
     }
 
 }

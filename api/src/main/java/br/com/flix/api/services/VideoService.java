@@ -2,8 +2,12 @@ package br.com.flix.api.services;
 
 import br.com.flix.api.dtos.requests.VideoDto;
 import br.com.flix.api.dtos.response.VideoResponse;
+import br.com.flix.api.infra.exceptions.CategoriaNaoEncontradaException;
 import br.com.flix.api.infra.exceptions.VideoNaoEncontradoException;
+import br.com.flix.api.model.Categoria;
 import br.com.flix.api.model.Video;
+import br.com.flix.api.model.enums.Cor;
+import br.com.flix.api.repositories.CategoriaRepository;
 import br.com.flix.api.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +23,22 @@ public class VideoService {
     @Autowired
     VideoRepository videoRepository;
 
+    @Autowired
+    CategoriaRepository categoriaRepository;
+
     @Transactional
-    public void save(Video video) {
+    public VideoResponse save(VideoDto dto) {
+        var video = new Video();
+        Categoria categoria = null;
+        if (dto.cor() != null) {
+            categoria = categoriaRepository.findByCor(dto.cor())
+                    .orElseThrow(() -> new CategoriaNaoEncontradaException(dto.cor()));
+        } if (categoria == null) {
+            categoria = categoriaRepository.findByCor(Cor.VERDE).get();
+        }
+        video.atualizar(dto, categoria);
         videoRepository.save(video);
+        return VideoResponse.of(video);
     }
 
     public List<VideoResponse> findAll() {
@@ -30,7 +47,6 @@ public class VideoService {
                 .map(VideoResponse::of)
                 .collect(Collectors.toList());
     }
-
 
     public Video findById(UUID id) {
         return videoRepository.findById(id)
