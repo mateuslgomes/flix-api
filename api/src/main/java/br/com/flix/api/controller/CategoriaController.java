@@ -9,6 +9,7 @@ import br.com.flix.api.services.VideoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,11 @@ public class CategoriaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoriaResponse>> buscar(Pageable pageable) {
-        return ResponseEntity.ok(categoriaService.findAll(pageable));
+    public ResponseEntity<Page<CategoriaResponse>> buscar(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "5") int maxVideos) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(categoriaService.findAll(pageable, maxVideos));
     }
 
     @GetMapping("{id}")

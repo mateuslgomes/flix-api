@@ -1,5 +1,6 @@
 package br.com.flix.api.repositories;
 
+import br.com.flix.api.model.Categoria;
 import br.com.flix.api.model.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,6 @@ public interface VideoRepository extends JpaRepository<Video, UUID> {
 
     Page<Video> findByTituloContains(String titulo, Pageable pageable);
 
+    Page<Video> findByCategorias(Categoria categoria, Pageable pageable);
+    
 }

@@ -2,21 +2,21 @@ package br.com.flix.api.services;
 
 import br.com.flix.api.dtos.requests.CategoriaDto;
 import br.com.flix.api.dtos.response.CategoriaResponse;
-import br.com.flix.api.dtos.response.VideoResponse;
 import br.com.flix.api.infra.exceptions.CategoriaNaoEncontradaException;
 import br.com.flix.api.model.Categoria;
-import br.com.flix.api.model.Video;
 import br.com.flix.api.model.enums.Cor;
 import br.com.flix.api.repositories.CategoriaRepository;
+import br.com.flix.api.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoriaService {
@@ -24,14 +24,23 @@ public class CategoriaService {
     @Autowired
     CategoriaRepository categoriaRepository;
 
+    @Autowired
+    VideoRepository videoRepository;
+
     public Categoria save(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
 
-    public Page<CategoriaResponse> findAll(Pageable pageable) {
+    public Page<CategoriaResponse> findAll(Pageable pageable, int maxVideos) {
         Page<Categoria> categorias = categoriaRepository.findAll(pageable);
-        return categorias.map(CategoriaResponse::of);
+        List<CategoriaResponse> responses = new ArrayList<>();
+        for (Categoria categoria : categorias) {
+            var videos = videoRepository.findByCategorias(categoria, pageable);
+            CategoriaResponse response = CategoriaResponse.of(categoria, maxVideos);
+            responses.add(response);
+        }
+        return new PageImpl<>(responses, pageable, categorias.getTotalElements());
     }
 
 

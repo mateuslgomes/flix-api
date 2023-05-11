@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 @Builder
 public record CategoriaResponse(UUID id, String titulo, Cor cor, List<UUID> videoId) {
 
-    public static CategoriaResponse of(Categoria categoria) {
+    public static CategoriaResponse of(Categoria categoria, int maxVideos) {
         List<UUID> videoIds = categoria.getVideos().stream()
+                .limit(maxVideos)
                 .map(Video::getId)
                 .collect(Collectors.toList());
-
         return CategoriaResponse.builder()
                 .id(categoria.getId())
                 .titulo(categoria.getTitulo())
