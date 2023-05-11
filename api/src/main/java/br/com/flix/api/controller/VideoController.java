@@ -2,14 +2,16 @@ package br.com.flix.api.controller;
 
 import br.com.flix.api.dtos.requests.VideoDto;
 import br.com.flix.api.dtos.response.VideoResponse;
-import br.com.flix.api.model.Video;
 import br.com.flix.api.services.CategoriaService;
 import br.com.flix.api.services.VideoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,16 +23,14 @@ public class VideoController {
     @Autowired
     VideoService videoService;
 
-    @Autowired
-    CategoriaService categoriaService;
-    
 
     @GetMapping
-    public ResponseEntity<List<VideoResponse>> buscadorVideos(@RequestParam(value = "search", required = false) String pesquisa) {
+    public ResponseEntity<Page<VideoResponse>> buscadorVideos(@RequestParam(value = "search", required = false) String pesquisa,
+                                                              @PageableDefault(sort = "titulo", direction = Sort.Direction.ASC) Pageable pageable) {
         if (pesquisa == null) {
-            return ResponseEntity.ok(videoService.findAll());
+            return ResponseEntity.ok(videoService.findAll(pageable));
         }
-        return ResponseEntity.ok(videoService.pesquisarVideos(pesquisa));
+        return ResponseEntity.ok(videoService.pesquisarVideos(pesquisa, pageable));
     }
 
     @PutMapping("{id}")

@@ -10,6 +10,8 @@ import br.com.flix.api.model.enums.Cor;
 import br.com.flix.api.repositories.CategoriaRepository;
 import br.com.flix.api.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,11 +43,9 @@ public class VideoService {
         return VideoResponse.of(video);
     }
 
-    public List<VideoResponse> findAll() {
-        var videos = videoRepository.findAll();
-        return videos.stream()
-                .map(VideoResponse::of)
-                .collect(Collectors.toList());
+    public Page<VideoResponse> findAll(Pageable pageable) {
+        var videos = videoRepository.findAll(pageable);
+        return videos.map(VideoResponse::of);
     }
 
     public Video findById(UUID id) {
@@ -74,11 +74,9 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
-    public List<VideoResponse> pesquisarVideos(String pesquisa) {
-         var videos = videoRepository.findByTituloContains(pesquisa);
-        return videos.stream()
-                .map(VideoResponse::of)
-                .collect(Collectors.toList());
+    public Page<VideoResponse> pesquisarVideos(String pesquisa, Pageable pageable) {
+        var videos = videoRepository.findByTituloContains(pesquisa, pageable);
+        return videos.map(VideoResponse::of);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 public record VideoResponse(UUID id, String titulo, String descricao, UUID CategoriaId, String url) {
 
     public static VideoResponse of(Video video) {
-        VideoResponse.VideoResponseBuilder builder = VideoResponse.builder()
+        var builder = VideoResponse.builder()
                 .id(video.getId())
                 .titulo(video.getTitulo())
                 .descricao(video.getDescricao())
