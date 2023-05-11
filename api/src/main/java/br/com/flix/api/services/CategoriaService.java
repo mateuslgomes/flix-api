@@ -9,6 +9,7 @@ import br.com.flix.api.model.Video;
 import br.com.flix.api.model.enums.Cor;
 import br.com.flix.api.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +28,12 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public List<CategoriaResponse> findAll() {
-        var categorias = categoriaRepository.findAll();
 
-        return categorias.stream()
-                .map(CategoriaResponse::of)
-                .collect(Collectors.toList());
+    public Page<CategoriaResponse> findAll(Pageable pageable) {
+        Page<Categoria> categorias = categoriaRepository.findAll(pageable);
+        return categorias.map(CategoriaResponse::of);
     }
+
 
     public Categoria findById(UUID id) {
         return categoriaRepository.findById(id)
